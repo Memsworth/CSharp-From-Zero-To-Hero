@@ -24,10 +24,10 @@ namespace BootCamp.Chapter1
         {
             for (int i = 0; i < array.Length - 1; i++)
             {
-                if (array[i] > array[i + 1])
-                    return true;
+                if ((array[i] > array[i + 1]))
+                    return false;
             }
-            return false;
+            return true;
         }
 
         private static void SortArray(int[] array)
@@ -84,7 +84,7 @@ namespace BootCamp.Chapter1
             if (array is null || array.Length == 0)
                 return array;
             var newArray = new int[array.Length - 1];
-            array.CopyTo(newArray, 1);
+            Array.Copy(array, 1, newArray, 0, newArray.Length);
             return newArray;
         }
 
@@ -120,12 +120,14 @@ namespace BootCamp.Chapter1
         {
             // ToDo: implement.
             if (array is null || array.Length == 0)
-                return new int[] { 0 };
+                return new int[] { number };
 
-            var newArray = new int[array.Length];
+            var newArray = new int[array.Length + 1];
             newArray[0] = number;
-            Array.Copy(array, 0, newArray, 1, array.Length);
-            return array;
+            for (int i = 1, j = 0; i < newArray.Length; i++)
+                newArray[i] = array[j++];
+
+            return newArray;
         }
 
         /// <summary>
@@ -138,8 +140,8 @@ namespace BootCamp.Chapter1
         {
             // ToDo: implement.
             if (array is null || array.Length == 0)
-                return new int[] { 0 };
-            var newArray = new int[array.Length];
+                return new int[] { number };
+            var newArray = new int[array.Length + 1];
             array.CopyTo(newArray, 0);
             newArray[^1] = number;
             return newArray;
@@ -155,14 +157,12 @@ namespace BootCamp.Chapter1
         public static int[] InsertAt(int[] array, int number, int index)
         {
             // ToDo: implement.
-            if (array is null || array.Length == 0)
-                return new int[] { 0 };
-
-            var newArray = new int[array.Length];
-
-            if (index > newArray.Length - 1 || index < 0)
+            if (index < 0 || index > (array is null ? 0 : array.Length))
                 return array;
+            if (array is null || array.Length == 0)
+                return new int[] { number };
 
+            var newArray = new int[array.Length + 1];
             newArray[index] = number;
             for (int i = 0, j = 0; i < newArray.Length; i++)
             {
